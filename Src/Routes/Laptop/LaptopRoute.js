@@ -5,5 +5,5 @@ const router = express.Router();
 router.get('/', getAllLaptop);
 router.get('/:brand', getByBrand);
 router.get('/detail/:id',getSingleLaptopData)
-
+ 
 module.exports = router;

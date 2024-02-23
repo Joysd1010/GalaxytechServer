@@ -16,7 +16,7 @@ const getByBrand = async (req, res) => {
   try {
       const { brand } = req.params;
       console.log(brand,'is accesing')
-      const laptops = await Laptop.find({ 'keyFeatures.brand': brand }).toArray();
+      const laptops = await Laptop.find({ 'keyFeatures.brand': { $regex: brand, $options: 'i' } }).toArray();
       res.json(laptops);
   } catch (error) {
       console.error(error);
