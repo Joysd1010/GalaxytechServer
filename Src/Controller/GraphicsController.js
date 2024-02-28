@@ -12,33 +12,6 @@ const getAllGPU = async (req, res, next) => {
   }
 };
 
-const getsorted = async (req, res) => {
-  try {
-    console.log('sorted')
-    const { sortBy, order } = req.query;
-    let sortOrder = 1;
-    if (order === 'desc') {
-      sortOrder = -1;
-    }
-    const sortFunction = {};
-    sortFunction[sortBy] = sortOrder;
-    const sortedProducts = await GPU.find({}).sort(sortFunction).toArray();
-    res.json(sortedProducts);
-  } catch (error) {
-    next(error);
-  }
-};
-
-const testHit = async (req, res) => {
-  try {
-    console.log("hitted");
-    res.send([5000,250]);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-};
-
 const getByBrand = async (req, res) => {
   try {
     const { brand } = req.params;
@@ -72,6 +45,5 @@ module.exports = {
   getAllGPU,
   getByBrand,
   getSingleGPUData,
-  getsorted,
-  testHit,
+  
 };

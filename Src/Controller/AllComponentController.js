@@ -13,18 +13,172 @@ const GraphicsCard = client.db('GalaxyTech').collection('GraphicsCard');
 const Casing = client.db('GalaxyTech').collection('Casing');
 const CasingCooler = client.db('GalaxyTech').collection('CasingCooler');
 const CPU_Cooler = client.db('GalaxyTech').collection('CPU_Cooler');
+let componentItem = []
 
 
-const getProcessor = async (req, res) => {
-    try {
-      const allProcessor = await Processor.find({}).toArray();
-      res.json(allProcessor);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'An error occurred while fetching processors' });
+
+const Router = async (req, res) => {
+  const { component } = req.params;
+
+  try {
+    switch (component) {
+      case 'Motherboard':
+        await getMotherboard(req, res);
+        break;
+      case 'HDD':
+        await getHDD(req, res);
+        break;
+      case 'SSD':
+        await getSSD(req, res);
+        break;
+      case 'Ram':
+        await getRam(req, res);
+        break;
+      case 'PSU':
+        await getPSU(req, res);
+        break;
+      case 'GraphicsCard':
+        await getGraphicsCard(req, res);
+        break;
+      case 'Casing':
+        await getCasing(req, res);
+        break;
+      case 'CasingCooler':
+        await getCasingCooler(req, res);
+        break;
+      case 'CpuCooler':
+        await getCPUCooler(req, res);
+        break;
+      case 'Processor':
+        await getProcessors(req, res);
+        break;
+      default:
+        res.status(404).json({ error: 'Component not found' });
+        break;
     }
-  };
-  
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while processing the request' });
+  }
+};
+
+const getAllProducts = async (req, res) => {
+  try {
+    const allProcessor = await Processor.find({}).toArray();
+    const allHDD = await HDD.find({}).toArray();
+    const allSSD = await SSD.find({}).toArray();
+    const allCPU_Cooler = await CPU_Cooler.find({}).toArray();
+    const allCasingCooler = await CasingCooler.find({}).toArray();
+    const allCasing = await Casing.find({}).toArray();
+    const allGraphicsCard = await GraphicsCard.find({}).toArray();
+    const allMotherboard = await Motherboard.find({}).toArray();
+    const allRam = await Ram.find({}).toArray();
+    const allPSU = await PSU.find({}).toArray();
+
+    const componentItem = [
+      ...allProcessor,
+      ...allHDD,
+      ...allSSD,
+      ...allCPU_Cooler,
+      ...allCasingCooler,
+      ...allCasing,
+      ...allGraphicsCard,
+      ...allMotherboard,
+      ...allRam,
+      ...allPSU,
+    ];
+
+    res.json(componentItem);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while fetching processors' });
+  }
+};
+
+const getSingleProducts = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Combine data from different collections into a single array
+    const allProcessor = await Processor.find({}).toArray();
+    const allHDD = await HDD.find({}).toArray();
+    const allSSD = await SSD.find({}).toArray();
+    const allCPU_Cooler = await CPU_Cooler.find({}).toArray();
+    const allCasingCooler = await CasingCooler.find({}).toArray();
+    const allCasing = await Casing.find({}).toArray();
+    const allGraphicsCard = await GraphicsCard.find({}).toArray();
+    const allMotherboard = await Motherboard.find({}).toArray();
+    const allRam = await Ram.find({}).toArray();
+    const allPSU = await PSU.find({}).toArray();
+
+    const componentItem = [
+      ...allProcessor,
+      ...allHDD,
+      ...allSSD,
+      ...allCPU_Cooler,
+      ...allCasingCooler,
+      ...allCasing,
+      ...allGraphicsCard,
+      ...allMotherboard,
+      ...allRam,
+      ...allPSU,
+    ];
+
+    // Find the product in the combined array using its ID
+    const product = componentItem.find(item => item._id.toString() === id);
+
+    if (!product) return res.status(404).json({ error: "Product not found" });
+
+    res.json(product);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while fetching the product' });
+  }
+};
+
+const getFeaturedProducts = async (req, res) => {
+  console.log('Getting featured products...');
+  try {
+    const allProcessor = await Processor.find({}).toArray();
+    const allHDD = await HDD.find({}).toArray();
+    const allSSD = await SSD.find({}).toArray();
+    const allCPU_Cooler = await CPU_Cooler.find({}).toArray();
+    const allCasingCooler = await CasingCooler.find({}).toArray();
+    const allCasing = await Casing.find({}).toArray();
+    const allGraphicsCard = await GraphicsCard.find({}).toArray();
+    const allMotherboard = await Motherboard.find({}).toArray();
+    const allRam = await Ram.find({}).toArray();
+    const allPSU = await PSU.find({}).toArray();
+
+    const componentItem = [
+      ...allProcessor,
+      ...allHDD,
+      ...allSSD,
+      ...allCPU_Cooler,
+      ...allCasingCooler,
+      ...allCasing,
+      ...allGraphicsCard,
+      ...allMotherboard,
+      ...allRam,
+      ...allPSU,
+    ];
+
+    // Shuffle the componentItem array
+    for (let i = componentItem.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [componentItem[i], componentItem[j]] = [componentItem[j], componentItem[i]];
+    }
+
+    // Get the first 20 items from the shuffled array
+    const randomItems = componentItem.slice(0, 20);
+
+    res.json(randomItems);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while fetching processors' });
+  }
+};
+
   const getMotherboard = async (req, res) => {
     try {
       const allMotherboard = await Motherboard.find({}).toArray();
@@ -44,7 +198,7 @@ const getProcessor = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while fetching HDDs' });
     }
   };
-  
+
   const getSSD = async (req, res) => {
     try {
       const allSSD = await SSD.find({}).toArray();
@@ -54,7 +208,7 @@ const getProcessor = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while fetching SSDs' });
     }
   };
-  
+
   const getRam = async (req, res) => {
     try {
       const allRam = await Ram.find({}).toArray();
@@ -64,7 +218,20 @@ const getProcessor = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while fetching RAMs' });
     }
   };
+  const getRamByBrand=async (req, res)=>{
+    try {
+      const { brand } = req.params;
   
+      const GPUs = await Ram.find({
+        "keyFeatures.brand": { $regex: brand, $options: "i" },
+      }).toArray();
+      res.json(GPUs);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+
   const getPSU = async (req, res) => {
     try {
       const allPSU = await PSU.find({}).toArray();
@@ -74,7 +241,7 @@ const getProcessor = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while fetching PSUs' });
     }
   };
-  
+
   const getGraphicsCard = async (req, res) => {
     try {
       const allGraphicsCard = await GraphicsCard.find({}).toArray();
@@ -84,7 +251,7 @@ const getProcessor = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while fetching graphics cards' });
     }
   };
-  
+
   const getCasing = async (req, res) => {
     try {
       const allCasing = await Casing.find({}).toArray();
@@ -94,7 +261,7 @@ const getProcessor = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while fetching casings' });
     }
   };
-  
+
   const getCasingCooler = async (req, res) => {
     try {
       const allCasingCooler = await CasingCooler.find({}).toArray();
@@ -104,7 +271,7 @@ const getProcessor = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while fetching casing coolers' });
     }
   };
-  
+
   const getCPUCooler = async (req, res) => {
     try {
       const allCPUCooler = await CPU_Cooler.find({}).toArray();
@@ -114,49 +281,30 @@ const getProcessor = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while fetching CPU coolers' });
     }
   };
-  const getAllProducts = async (req, res) => {
+  const getProcessors = async (req, res) => {
     try {
-      const allProcessor = await getProcessor(res);
-      const allMotherboard = await getMotherboard(res);
-      const allHDD = await getHDD(res);
-      const allSSD = await getSSD(res);
-      const allRam = await getRam(res);
-      const allPSU = await getPSU(res);
-      const allGraphicsCard = await getGraphicsCard(res);
-      const allCasing = await getCasing(res);
-      const allCasingCooler = await getCasingCooler(res);
-      const allCPUCooler = await getCPUCooler(res);
-  
-      const allProducts = [
-        ...allProcessor,
-        ...allMotherboard,
-        ...allHDD,
-        ...allSSD,
-        ...allRam,
-        ...allPSU,
-        ...allGraphicsCard,
-        ...allCasing,
-        ...allCasingCooler,
-        ...allCPUCooler,
-      ];
-  
-      res.json(allProducts);
+      const allProcessor = await Processor.find({}).toArray();
+      res.json(allProcessor);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'An error occurred while fetching all products' });
+      res.status(500).json({ error: 'An error occurred while fetching CPU coolers' });
     }
   };
   
-  module.exports = {
-    getProcessor,
-    getMotherboard,
-    getHDD,
-    getSSD,
-    getRam,
-    getPSU,
-    getGraphicsCard,
-    getCasing,
-    getCasingCooler,
-    getCPUCooler,
-    getAllProducts, // add this line to export the new function
-  };
+
+
+
+module.exports = {getFeaturedProducts,getSingleProducts,
+  getAllProducts,
+  getMotherboard,
+  getHDD,
+  getSSD,
+  getRam,
+  getPSU,
+  getGraphicsCard,
+  getCasing,
+  getCasingCooler,
+  getCPUCooler,
+  getProcessors, getRamByBrand,
+  Router
+};

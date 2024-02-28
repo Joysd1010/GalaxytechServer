@@ -10,6 +10,8 @@ const Component = require('./Src/Routes/Component/Components.js')
 const monitor=require('./Src/Routes/Monitor/MonitorRoute.js')
 const GPU_Route= require('./Src/Routes/GraphicsCard/GPU_Route')
 const Phone= require('./Src/Routes/Phone/PhoneRoute.js')
+const Question= require('./Src/Routes/Question/QuestionRouter.js')
+const Review= require('./Src/Routes/Review/ReviewRoute.js')
 app.use(cors());
 app.use(express.json());
 //----------------------------------------route using  --------------------------------------
@@ -19,6 +21,8 @@ app.use('/component', Component)
 app.use('/monitor', monitor)
 app.use('/gpu',GPU_Route)
 app.use('/phone',Phone)
+app.use('/qna',Question)
+app.use('/review',Review)
 
 
 //---------------------------------------Connecting  to the database and server running-----------------

@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllGPU, getByBrand, getSingleGPUData, getsorted, testHit } = require('../../Controller/GraphicsController');
+const { getAllGPU, getByBrand, getSingleGPUData } = require('../../Controller/GraphicsController');
 const router = express.Router();
 
 
