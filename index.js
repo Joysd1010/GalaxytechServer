@@ -13,6 +13,7 @@ const Phone= require('./Src/Routes/Phone/PhoneRoute.js')
 const Question= require('./Src/Routes/Question/QuestionRouter.js')
 const Review= require('./Src/Routes/Review/ReviewRoute.js')
 const StripeRoute=require('./Src/Controller/PaymentController.js')
+const cart=require('./Src/Routes/Cart/CartRoute.js')
 
 app.use(cors());
 app.use(express.json());
@@ -26,8 +27,9 @@ app.use('/phone',Phone)
 app.use('/qna',Question)
 app.use('/review',Review)
 app.use("/payment",StripeRoute)
+app.use("/cart",cart)
 
-//=====================================PayMent_Method==================================================
+
 
 
 //---------------------------------------Connecting  to the database and server running-----------------
