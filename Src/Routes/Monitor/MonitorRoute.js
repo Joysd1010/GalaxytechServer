@@ -1,10 +1,9 @@
 const express = require('express');
-const { getAllMonitor, getByBrand, getSingleMonitorData } = require('../../Controller/MonitorController');
+const { getSingleMonitorData, GetAllPrepousMonitor } = require('../../Controller/MonitorController');
 const router = express.Router();
 
 
-router.get('/', getAllMonitor);
-router.get('/:brand', getByBrand);
+router.get('/get',GetAllPrepousMonitor)
 router.get('/detail/:id',getSingleMonitorData)
 
 

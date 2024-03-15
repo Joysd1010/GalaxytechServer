@@ -10,16 +10,17 @@ const {getSingleProducts,getAllProducts,
     getCasingCooler,
     getCPUCooler,
     getProcessors, getRamByBrand,
-    Router } = require('../../Controller/AllComponentController');
+    Router, 
+    getFeaturedProducts} = require('../../Controller/AllComponentController');
 const router = express.Router();
 
 
 
 router.get('/detail/:id', getSingleProducts);
+router.get('/feature', getFeaturedProducts);
 router.get('/ram', getRam);
 router.get('/:component', Router);
 router.get('/ram/:brand',getRamByBrand)
-router.get('/', getAllProducts);
 router.get('/', getAllProducts);
 router.get('/', getAllProducts);
 router.get('/', getAllProducts);

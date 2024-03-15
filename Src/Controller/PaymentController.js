@@ -28,7 +28,6 @@ const SavePaymentData=async(req,res)=>{
     const newPayment = req.body;
     const result = await PaymentData.insertOne(newPayment)
     res.send(result)
-
 }
 
 router.post('/save',SavePaymentData)
