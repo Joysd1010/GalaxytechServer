@@ -54,11 +54,6 @@ const GetAllPrepousMonitor = async (req, res) => {
 };
 
 
-
-
-
-
-
 const getSingleMonitorData = async (req, res) => {
   const { id } = req.params;
   console.log(id)

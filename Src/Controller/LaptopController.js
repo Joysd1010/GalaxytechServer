@@ -62,8 +62,8 @@ const getAllperpousLaptop = async (req, res) => {
     const minDiscountPrice = Math.min(...discountPrices);
     const maxDiscountPrice = Math.max(...discountPrices);
 
-    console.log('total renderable item : ', renderedArray.length);
-    console.log('total Filtered item : ', FilteredLaptop.length);
+    // console.log('total renderable item : ', renderedArray.length);
+    // console.log('total Filtered item : ', FilteredLaptop.length);
 
     res.send({ minDiscountPrice, maxDiscountPrice, totalpage: Math.ceil(FilteredLaptop.length / limit), laptops: renderedArray });
   } catch (error) {
@@ -85,4 +85,4 @@ const getSingleLaptopData = async (req, res) => {
   }
 }
 
-module.exports = {  getSingleLaptopData, getrelated ,getAllperpousLaptop};
+module.exports = { getSingleLaptopData, getrelated, getAllperpousLaptop };

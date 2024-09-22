@@ -1,10 +1,9 @@
 const express = require('express');
-const { getAllGPU, getByBrand, getSingleGPUData } = require('../../Controller/GraphicsController');
+const {  getSingleGPUData, getRelatedGPU,getAllPerposeGpu } = require('../../Controller/GraphicsController');
 const router = express.Router();
-
-
-router.get('/', getAllGPU);
-router.get('/:brand', getByBrand);
+//-------------------All Get Requests---------------------------------
+router.get('/related', getRelatedGPU);
+router.get('/get', getAllPerposeGpu);
 router.get('/detail/:id',getSingleGPUData)
 
 
